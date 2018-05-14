@@ -20,6 +20,7 @@ app.use(function (error, req, res, next) {
   }
 });
 
+// POST TODOS - Create
 app.post('/todos', (req, res) => {
   var todo = new Todo({
     text: req.body.text
@@ -32,13 +33,11 @@ app.post('/todos', (req, res) => {
   });
 });
 
+// GET TODOS
 app.get('/todos', (req, res) => {
-  Todo.find().then((docs) => {
-    res.send(docs);
-  }, (e) => {
-    res.status(400).send(e);
-    console.log('Error returning todos.', e);
-  })
+  Todo.find().then((todos) => {
+    res.send({todos});
+  }, e => res.status(400).send(e));
 });
 
 app.listen(3000, () => {
